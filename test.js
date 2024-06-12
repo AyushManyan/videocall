@@ -27,10 +27,7 @@ const servers = {
 };
 
 let constraints = {
-    video: {
-        width: { min: 640, ideal: 1920, max: 1920 },
-        height: { min: 480, ideal: 1080, max: 1080 },
-    },
+    video: true,
     audio: true
 };
 
@@ -47,11 +44,15 @@ let init = async () => {
 
         client.on('MessageFromPeer', handleMessageFromPeer);
 
+        // Requesting user media
         localStream = await navigator.mediaDevices.getUserMedia(constraints);
         document.getElementById('user-1').srcObject = localStream;
         console.log("Local stream initialized");
     } catch (error) {
         console.error('Failed to initialize', error);
+
+        // Display error to the user
+        alert('Failed to access camera and/or microphone. Please ensure that the necessary permissions are granted and no other application is using the camera.');
     }
 };
 
