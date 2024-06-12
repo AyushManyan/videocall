@@ -49,6 +49,7 @@ let init = async () => {
 
         localStream = await navigator.mediaDevices.getUserMedia(constraints);
         document.getElementById('user-1').srcObject = localStream;
+        console.log("Local stream initialized");
     } catch (error) {
         console.error('Failed to initialize', error);
     }
@@ -113,6 +114,8 @@ let createPeerConnection = async (MemberId) => {
                 await client.sendMessageToPeer({ text: JSON.stringify({ 'type': 'candidate', 'candidate': event.candidate }) }, MemberId);
             }
         };
+
+        console.log("Peer connection created");
     } catch (error) {
         console.error('Failed to create peer connection', error);
     }
@@ -126,6 +129,8 @@ let createOffer = async (MemberId) => {
         await peerConnection.setLocalDescription(offer);
 
         await client.sendMessageToPeer({ text: JSON.stringify({ 'type': 'offer', 'offer': offer }) }, MemberId);
+
+        console.log("Offer created and sent");
     } catch (error) {
         console.error('Failed to create offer', error);
     }
@@ -141,6 +146,8 @@ let createAnswer = async (MemberId, offer) => {
         await peerConnection.setLocalDescription(answer);
 
         await client.sendMessageToPeer({ text: JSON.stringify({ 'type': 'answer', 'answer': answer }) }, MemberId);
+
+        console.log("Answer created and sent");
     } catch (error) {
         console.error('Failed to create answer', error);
     }
@@ -151,6 +158,8 @@ let addAnswer = async (answer) => {
         if (!peerConnection.currentRemoteDescription) {
             await peerConnection.setRemoteDescription(answer);
         }
+
+        console.log("Answer added");
     } catch (error) {
         console.error('Failed to add answer', error);
     }
@@ -176,6 +185,8 @@ let toggleCamera = async () => {
             videoTrack.enabled = true;
             document.getElementById('camera-btn').style.backgroundColor = 'rgb(179, 102, 249, .9)';
         }
+
+        console.log("Camera toggled");
     } catch (error) {
         console.error('Failed to toggle camera', error);
     }
@@ -192,6 +203,8 @@ let toggleMic = async () => {
             audioTrack.enabled = true;
             document.getElementById('mic-btn').style.backgroundColor = 'rgb(179, 102, 249, .9)';
         }
+
+        console.log("Microphone toggled");
     } catch (error) {
         console.error('Failed to toggle microphone', error);
     }
