@@ -69,6 +69,7 @@
         .smallFrame{
             height: 80px;
             width: 120px;
+            transform: rotate(90deg);
         }
 
         .control-container img{
